@@ -62,7 +62,7 @@ public class SpyMemcacheClientFactory implements MemcacheClientFactory {
     }
 
     private DefaultConnectionFactory buildDefaultConnectionFactory() {
-        return new DefaultConnectionFactory(getOperationQueueLength(), getReadBufferSize(), getHashAlgorithm()) {
+        return new DefaultConnectionFactory(ClientMode.Dynamic,getOperationQueueLength(), getReadBufferSize(), getHashAlgorithm()) {
             @Override
             public long getOperationTimeout() {
                 return getOperationTimeoutMillis();
