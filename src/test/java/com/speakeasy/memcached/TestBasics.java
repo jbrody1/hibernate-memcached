@@ -39,7 +39,7 @@ public class TestBasics {
 	}
 	
     private String getServerList() {
-		return "cache1.speakeasyapp.net:11211";
+		return "cache1.stage.speakeasyapp.net:11211";
 //    	return "localhost:11211";
 	}
 
