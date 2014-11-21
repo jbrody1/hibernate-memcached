@@ -44,7 +44,7 @@ public class TestBasics {
 	}
 
 	protected DefaultConnectionFactory buildDefaultConnectionFactory() {
-        return new DefaultConnectionFactory(ClientMode.Static,getOperationQueueLength(), 
+        return new DefaultConnectionFactory(ClientMode.Dynamic,getOperationQueueLength(), 
         		getReadBufferSize(), getHashAlgorithm()) {
             @Override
             public long getOperationTimeout() {
