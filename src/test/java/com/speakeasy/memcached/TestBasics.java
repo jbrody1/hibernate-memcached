@@ -30,7 +30,7 @@ public class TestBasics {
 			System.out.println(nodeEndPoint.getHostName()+"::"+nodeEndPoint.getIpAddress()+":"+nodeEndPoint.getPort());
 		}
 		String value="cabbage"+System.currentTimeMillis();
-		client.set("myobject", 1234567, value);
+		client.set("myobject", 600, value);
 		o=(String) client.get("myObject");
 		Assert.assertNotNull(o);
 		Assert.assertEquals(value,o);
