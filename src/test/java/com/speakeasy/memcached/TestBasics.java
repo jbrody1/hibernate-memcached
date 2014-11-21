@@ -1,6 +1,5 @@
 package com.speakeasy.memcached;
 
-import java.io.IOException;
 import java.util.Collection;
 
 import net.spy.memcached.AddrUtil;
@@ -11,6 +10,7 @@ import net.spy.memcached.HashAlgorithm;
 import net.spy.memcached.MemcachedClient;
 import net.spy.memcached.auth.AuthDescriptor;
 import net.spy.memcached.config.NodeEndPoint;
+import net.spy.memcached.internal.OperationFuture;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,30 +18,33 @@ import org.junit.Test;
 public class TestBasics {
 
 	@Test
-	public void testConnection() throws IOException {		
+	public void testConnection() throws Exception {		
 		MemcachedClient client = new MemcachedClient(buildDefaultConnectionFactory(),
 				AddrUtil.getAddresses(getServerList()));
-		String o=(String) client.get("myobject");
+		String key="cabbage"+System.currentTimeMillis();
+		String value="babbage"+System.currentTimeMillis();
+		String o=(String) client.get(key);
 		Assert.assertNull(o);
 		Collection<NodeEndPoint> c=client.getAllNodeEndPoints();
 		Assert.assertEquals(2, c.size());
 		System.out.println("THE NODES: ");
 		for (NodeEndPoint nodeEndPoint : c) {
 			System.out.println(nodeEndPoint.getHostName()+"::"+nodeEndPoint.getIpAddress()+":"+nodeEndPoint.getPort());
-		}
-		String value="cabbage"+System.currentTimeMillis();
-		client.set("myobject", 600, value);
-		o=(String) client.get("myObject");
+		}	
+		OperationFuture<Boolean> f=client.set(key, 600, value);
+		f.get();
+		o=(String) client.get(key);
 		Assert.assertNotNull(o);
 		Assert.assertEquals(value,o);
 	}
 	
     private String getServerList() {
 		return "cache1.speakeasyapp.net:11211";
+//    	return "localhost:11211";
 	}
 
 	protected DefaultConnectionFactory buildDefaultConnectionFactory() {
-        return new DefaultConnectionFactory(ClientMode.Dynamic,getOperationQueueLength(), 
+        return new DefaultConnectionFactory(ClientMode.Static,getOperationQueueLength(), 
         		getReadBufferSize(), getHashAlgorithm()) {
             @Override
             public long getOperationTimeout() {
