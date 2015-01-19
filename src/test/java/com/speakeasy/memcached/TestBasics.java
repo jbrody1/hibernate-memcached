@@ -13,11 +13,13 @@ import net.spy.memcached.config.NodeEndPoint;
 import net.spy.memcached.internal.OperationFuture;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestBasics {
 
 	@Test
+	@Ignore
 	public void testConnection() throws Exception {		
 		MemcachedClient client = new MemcachedClient(buildDefaultConnectionFactory(),
 				AddrUtil.getAddresses(getServerList()));
