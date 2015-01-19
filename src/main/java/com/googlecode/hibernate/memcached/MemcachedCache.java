@@ -45,6 +45,7 @@ import java.util.Map;
  *
  * @author Ray Krueger
  */
+@SuppressWarnings("deprecation")
 public class MemcachedCache implements Cache {
 
     private final Logger log = LoggerFactory.getLogger(MemcachedCache.class);

@@ -81,6 +81,7 @@ import java.util.Properties;
  *
  * @author Ray Krueger
  */
+@SuppressWarnings("deprecation")
 public class MemcachedCacheProvider implements CacheProvider {
 
     private final Logger log = LoggerFactory.getLogger(MemcachedCacheProvider.class);
