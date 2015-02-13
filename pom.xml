@@ -49,6 +49,7 @@
     </scm>
 
     <properties>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- You can redefine these properties in your $HOME/.m2/settings.xml to point to your own Maven repository (e.g. Nexus) -->
         <hibernate-memcached.repository.releases.url>svn:https://raykrueger.googlecode.com/svn/repository</hibernate-memcached.repository.releases.url>
