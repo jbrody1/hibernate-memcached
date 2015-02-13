@@ -1,10 +1,14 @@
 package com.googlecode.hibernate.memcached.spymemcached;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.spy.memcached.*;
 import net.spy.memcached.auth.AuthDescriptor;
 import net.spy.memcached.auth.PlainCallbackHandler;
 
 import com.googlecode.hibernate.memcached.Config;
+import com.googlecode.hibernate.memcached.LoggingMemcacheExceptionHandler;
 import com.googlecode.hibernate.memcached.Memcache;
 import com.googlecode.hibernate.memcached.MemcacheClientFactory;
 import com.googlecode.hibernate.memcached.PropertiesHelper;
@@ -16,7 +20,7 @@ import com.googlecode.hibernate.memcached.PropertiesHelper;
  * @author Ray Krueger
  */
 public class SpyMemcacheClientFactory implements MemcacheClientFactory {
-
+	private static final Logger log = LoggerFactory.getLogger(SpyMemcacheClientFactory.class);
     public static final String PROP_SERVERS = Config.PROP_PREFIX + "servers";
     public static final String PROP_OPERATION_QUEUE_LENGTH = Config.PROP_PREFIX + "operationQueueLength";
     public static final String PROP_READ_BUFFER_SIZE = Config.PROP_PREFIX + "readBufferSize";
@@ -26,6 +30,7 @@ public class SpyMemcacheClientFactory implements MemcacheClientFactory {
     public static final String PROP_DAEMON_MODE = Config.PROP_PREFIX + "daemonMode";
     public static final String PROP_USERNAME = Config.PROP_PREFIX + "username";
     public static final String PROP_PASSWORD = Config.PROP_PREFIX + "password";
+    public static final String PROP_STATIC = Config.PROP_PREFIX + "static";
     private final PropertiesHelper properties;
 
     public SpyMemcacheClientFactory(PropertiesHelper properties) {
@@ -62,7 +67,12 @@ public class SpyMemcacheClientFactory implements MemcacheClientFactory {
     }
 
     private DefaultConnectionFactory buildDefaultConnectionFactory() {
-        return new DefaultConnectionFactory(ClientMode.Dynamic,getOperationQueueLength(), getReadBufferSize(), getHashAlgorithm()) {
+    	log.info("Building Connection Factory....");
+    	String cm  = properties.get(PROP_STATIC);
+    	boolean staticMode = Boolean.parseBoolean(cm);
+    	ClientMode clientMode = staticMode ? ClientMode.Static : ClientMode.Dynamic;
+    	log.info("ConnectionMode: "+clientMode);
+        return new DefaultConnectionFactory(clientMode,getOperationQueueLength(), getReadBufferSize(), getHashAlgorithm()) {
             @Override
             public long getOperationTimeout() {
                 return getOperationTimeoutMillis();
