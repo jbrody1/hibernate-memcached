@@ -1,4 +1,13 @@
-# Hibernate-memcached
+# Hibernate-memcached-fork
+
+This is a fork that incorporates Amazon's forked SpyMemcached library to allow for dynamic configuration
+of ElasticCache
+
+Use by providing the configuration endpoint as your node.
+Disable by using hibernate.memcached.static=true - in this case your node list
+will be treated as a static list.
+
+
 A library for using Memcached as a second level distributed cache in Hibernate.
 
   * Based on the excellent spymemcached client
