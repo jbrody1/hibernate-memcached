@@ -3,7 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.speakeasy</groupId>
     <artifactId>hibernate-memcached</artifactId>
+    <!-- 
     <version>1.41-speakeasy</version>
+     -->
+    <version>1.42-speakeasy</version>
     <name>hibernate-memcached</name>
     <description>A library for using Memcached as a second level distributed cache in Hibernate.</description>
     <url>http://code.google.com/p/hibernate-memcached/</url>
@@ -25,6 +28,18 @@
     </licenses>
 
     <repositories>
+     		<repository>
+			<id>com.speakeasy.thirdparty</id>
+			<name>SpeakEasy Third Party</name>
+			<url>http://nexus.dev.speakeasyapp.net/nexus/content/repositories/thirdparty/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled> 
+			</snapshots>
+		</repository>
+ 
         <repository>
             <id>mine</id>
             <name>mine</name>
@@ -283,10 +298,17 @@
             <version>${groovy.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- 
         <dependency>
         	<groupId>com.amazonaws</groupId>
         	<artifactId>elasticache-java-cluster-client</artifactId>
         	<version>1.0.61.0</version>
         </dependency>
+        -->
+  <dependency>
+  <groupId>com.amazon.aws</groupId>
+  <artifactId>elasticache</artifactId>
+  <version>1.0.1-speakeasy</version>
+</dependency>
     </dependencies>
 </project>
